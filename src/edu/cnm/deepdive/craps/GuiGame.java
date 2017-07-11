@@ -2,7 +2,6 @@ package edu.cnm.deepdive.craps;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.net.URL;
 import java.util.Random;
@@ -30,16 +29,14 @@ public class GuiGame
   private ImageIcon rollIcon;
   private ImageIcon haltIcon;
   private ImageIcon blankIcon;
-  private JPanel roll1;
-  private JPanel roll2;
+  private JLabel roll1;
+  private JLabel roll2;
   private JButton play;
   private JButton stop;
   private JLabel wins;
   private JLabel losses;
   private JLabel point;
   private JLabel roll;
-  private Graphics die1;
-  private Graphics die2;
   
   private boolean uiSetup = false;
   private boolean playClicked = false;
@@ -77,14 +74,8 @@ public class GuiGame
     rollIcon = createImageIcon("images/roll.png");
     haltIcon = createImageIcon("images/halt.png");
     blankIcon = createImageIcon("images/blank.png");
-    roll1 = new JPanel();
-    roll2 = new JPanel();
-    die1 = roll1.getGraphics();
-    die2 = roll2.getGraphics();
-    blankIcon.paintIcon(roll1, die1, 0, 0);
-    blankIcon.paintIcon(roll2, die2, 200, 0);
-    roll1.setEnabled(false);
-    roll2.setEnabled(false);
+    roll1 = new JLabel(blankIcon);
+    roll2 = new JLabel(blankIcon);
     dicePanel.add(roll1);
     dicePanel.add(roll2);
     play = new JButton(rollIcon);
@@ -146,8 +137,8 @@ public class GuiGame
   
           @Override
           public void run() {
-            dieFaces[rng.nextInt(6)].paintIcon(roll1, die1, 0, 0);
-            dieFaces[rng.nextInt(6)].paintIcon(roll2, die2, 200, 0);
+            roll1.setIcon(dieFaces[rng.nextInt(6)]);
+            roll2.setIcon(dieFaces[rng.nextInt(6)]);
           }
       
         });
@@ -161,8 +152,8 @@ public class GuiGame
     SwingUtilities.invokeLater(new Runnable() {
       @Override
       public void run() {
-        dieFaces[roll[0] - 1].paintIcon(roll1, die1, 0, 0);
-        dieFaces[roll[1] - 1].paintIcon(roll2, die2, 200, 0);
+        roll1.setIcon(dieFaces[roll[0] - 1]);
+        roll2.setIcon(dieFaces[roll[1] - 1]);
         rollLabel.setText(String.format(ROLL, roll[0] + roll[1]));
         rollLabel.setVisible(true);
       }
