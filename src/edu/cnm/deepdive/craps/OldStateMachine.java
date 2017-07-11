@@ -9,7 +9,7 @@ import java.util.Random;
  * @author Sky Link
  *
  */
-public class StateMachine {
+public class OldStateMachine {
   
   public enum PlayState {
     COME_OUT, CONTINUE, DONE;
